@@ -1,28 +1,5 @@
 #项目分类功能  
 
-
-app  
-- 主目录 包含登陆，首页，设置等主体代码,引用业务module
-
-
-
-app-purchase                    
-- 采购业务代码，引用app-middle
-
-
-
-app-z-middle                    
-- 连接其他module和第三方库文件，对基础工具类为了适应业务场景进一步封装
-- BaseTitleActivity封装
-- retrofit，rxjava针对产品返回格式进一步封装
-    
-lib-resource
-- 资源文件，style
-- 统一预留适配主题方案，colors，dimens正常申明颜色尺寸
-- 在style对应主题方案中引用，然后attr文件中申明，布局尽量使用style中已有风格
-- 如果没有在对应包中新建styles,attr,主题可以新建然后继承原主题
-
-
 ###以下代码不含任何业务 任何代码可以使用  
 
 
