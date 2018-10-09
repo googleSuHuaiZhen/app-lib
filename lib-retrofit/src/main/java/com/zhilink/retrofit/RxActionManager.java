@@ -1,4 +1,4 @@
-package com.zhilink.lib_retrofit;
+package com.zhilink.retrofit;
 
 import java.util.LinkedHashMap;
 import java.util.Set;

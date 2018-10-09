@@ -1,2 +1,2 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zhilink.lib_crash_exception" />
+    package="com.zhilink.crashexception" />

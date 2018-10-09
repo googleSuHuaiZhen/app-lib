@@ -5,8 +5,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import io.reactivex.disposables.Disposable;
-import com.zhilink.lib_retrofit.BaseObserver;
-import com.zhilink.lib_retrofit.ObserverOnNextErrorStringListener;
+import com.zhilink.retrofit.BaseObserver;
+import com.zhilink.retrofit.ObserverOnNextErrorStringListener;
 import com.zhilink.utils.LogUtils;
 import com.zhilink.utils.TelephonyUtils;
 

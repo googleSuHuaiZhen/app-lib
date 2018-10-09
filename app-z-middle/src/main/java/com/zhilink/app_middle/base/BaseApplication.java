@@ -5,7 +5,7 @@ import android.app.Application;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
-import com.zhilink.lib_crash_exception.CrashHandler;
+import com.zhilink.crashexception.CrashHandler;
 import com.zhilink.utils.TelephonyUtils;
 
 /**

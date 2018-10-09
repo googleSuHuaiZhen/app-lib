@@ -1,4 +1,4 @@
-package com.zhilink.lib_crash_exception;
+package com.zhilink.crashexception;
 
 /**
  * @author xiemeng

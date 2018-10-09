@@ -12,7 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import com.zhilink.app_middle.base.BaseTitleActivity;
-import com.zhilink.lib_retrofit.ObserverOnNextErrorStringListener;
+import com.zhilink.retrofit.ObserverOnNextErrorStringListener;
 import com.zhilink.app_middle.net.Api;
 import com.zhilink.app_middle.net.ApiMethods;
 import com.zhilink.app_middle.net.ApiService;

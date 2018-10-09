@@ -1,10 +1,9 @@
-package com.zhilink.lib_retrofit;
+package com.zhilink.retrofit;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +37,7 @@ public class RetrofitUtils {
     /**
      * 无缓存策略的Retrofit
      */
-    public Retrofit getRetrofit(String baseUrl) {
+    public Retrofit getRetrofit(String baseUrl, Interceptor tokenInterceptor) {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //创建一个OkHttpClient并设置超时时间
@@ -46,6 +45,7 @@ public class RetrofitUtils {
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
                 .addInterceptor(logInterceptor)
+                .addInterceptor(tokenInterceptor)
                 .build();
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -56,11 +56,12 @@ public class RetrofitUtils {
                 .build();
     }
 
+
     /**
      * 无缓存策略的Retrofit
      * 使用String统一返回
      */
-    public Retrofit getRetrofitNoGSon(String baseUrl) {
+    public Retrofit getRetrofitNoGSon(String baseUrl, Interceptor tokenInterceptor) {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //创建一个OkHttpClient并设置超时时间
@@ -68,6 +69,7 @@ public class RetrofitUtils {
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
                 .addInterceptor(logInterceptor)
+                .addInterceptor(tokenInterceptor)
                 .build();
 
         return new Retrofit.Builder()
@@ -81,7 +83,7 @@ public class RetrofitUtils {
     /**
      * 无网络时获取缓存数据
      */
-    public Retrofit getCacheRetrofit(Context context, String baseUrl) {
+    public Retrofit getCacheRetrofit(Context context, String baseUrl, Interceptor tokenInterceptor) {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //缓存
@@ -106,6 +108,7 @@ public class RetrofitUtils {
                 .addNetworkInterceptor(getRewriteCacheControlInterceptor(context))
                 .addInterceptor(headerInterceptor)
                 .addInterceptor(logInterceptor)
+                .addInterceptor(tokenInterceptor)
                 .cache(cache)
                 .build();
 
@@ -166,7 +169,7 @@ public class RetrofitUtils {
         this.cacheStaleSec = cacheStaleSec;
     }
 
-    private  boolean isNetworkConnected(Context context) {
+    private boolean isNetworkConnected(Context context) {
         if (context != null) {
             ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
@@ -177,7 +180,7 @@ public class RetrofitUtils {
         return false;
     }
 
-    private  boolean isBlank(String str) {
+    private boolean isBlank(String str) {
         int length;
         if ((str == null) || str.equals("null") || ((length = str.length()) == 0)) {
             return true;

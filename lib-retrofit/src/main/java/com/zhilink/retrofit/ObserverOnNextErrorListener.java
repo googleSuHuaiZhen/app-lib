@@ -1,4 +1,4 @@
-package com.zhilink.lib_retrofit;
+package com.zhilink.retrofit;
 
 /**
  * 回写next和error方法
