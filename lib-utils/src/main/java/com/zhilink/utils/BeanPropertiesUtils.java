@@ -25,7 +25,7 @@ public class BeanPropertiesUtils {
     /**
      * 利用反射实现对象之间属性复制--父类属性无法copy
      */
-    public static void copyProperties(Object from, Object to) throws Exception {
+    public static void copyProperties(Object from, Object to) {
         copyPropertiesExclude(from, to, null);
     }
 
@@ -36,10 +36,27 @@ public class BeanPropertiesUtils {
     public static void copyPropertiesExclude(Object from, Object to, String[] excludesArray) {
         List<String> excludesList = null;
         if (excludesArray != null && excludesArray.length > 0) {
-            excludesList = Arrays.asList(excludesArray);    //构造列表对象
+            //构造列表对象
+            excludesList = Arrays.asList(excludesArray);
         }
-        Method[] fromMethods = from.getClass().getDeclaredMethods();
-        Method[] toMethods = to.getClass().getDeclaredMethods();
+
+        Class sourceClass = from.getClass();
+        ArrayList fromMethodList;
+        for (fromMethodList = new ArrayList(); sourceClass != null; sourceClass = sourceClass.getSuperclass()) {
+            fromMethodList.addAll(Arrays.asList(sourceClass.getDeclaredMethods()));
+        }
+
+        Class toClass = to.getClass();
+        ArrayList toMethodList;
+        for (toMethodList = new ArrayList(); toClass != null; toClass = toClass.getSuperclass()) {
+            toMethodList.addAll(Arrays.asList(toClass.getDeclaredMethods()));
+        }
+        Method[] fromMethods= new Method[fromMethodList.size()];
+        fromMethodList.toArray(fromMethods);
+        Method[] toMethods= new Method[toMethodList.size()];
+        toMethodList.toArray(toMethods);
+
+
         Method fromMethod = null, toMethod = null;
         String fromMethodName = null, toMethodName = null;
         for (int i = 0; i < fromMethods.length; i++) {
@@ -92,8 +109,23 @@ public class BeanPropertiesUtils {
         } else {
             return;
         }
-        Method[] fromMethods = from.getClass().getDeclaredMethods();
-        Method[] toMethods = to.getClass().getDeclaredMethods();
+
+        Class sourceClass = from.getClass();
+        ArrayList fromMethodList;
+        for (fromMethodList = new ArrayList(); sourceClass != null; sourceClass = sourceClass.getSuperclass()) {
+            fromMethodList.addAll(Arrays.asList(sourceClass.getDeclaredMethods()));
+        }
+
+        Class toClass = to.getClass();
+        ArrayList toMethodList;
+        for (toMethodList = new ArrayList(); toClass != null; toClass = toClass.getSuperclass()) {
+            toMethodList.addAll(Arrays.asList(toClass.getDeclaredMethods()));
+        }
+        Method[] fromMethods= new Method[fromMethodList.size()];
+        fromMethodList.toArray(fromMethods);
+        Method[] toMethods= new Method[toMethodList.size()];
+        toMethodList.toArray(toMethods);
+
         Method fromMethod = null, toMethod = null;
         String fromMethodName = null, toMethodName = null;
         for (int i = 0; i < fromMethods.length; i++) {
@@ -148,85 +180,8 @@ public class BeanPropertiesUtils {
     }
 
 
-    /**
-     * 复制字段的值
-     *
-     * @param source 源对象
-     * @param target 目标对象
-     */
-    public static void copyFields(Object source, Object target) {
-        HashMap<String, Field> sourceFieldMap = getAllFields(source);
-        HashMap<String, Field> targetFieldMap = getAllFields(target);
-        Iterator entries = sourceFieldMap.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry entry = (Map.Entry) entries.next();
-            String key = (String) entry.getKey();
-            Field value = (Field) entry.getValue();
-            value.setAccessible(true);
-            try {
-                if (value.get(source) != null && targetFieldMap.containsKey(key)) {
-                    targetFieldMap.get(key).setAccessible(true);
-                    targetFieldMap.get(key).set(target, value.get(source));
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
 
-        }
-    }
 
-    /**
-     * 复制字段的值
-     *
-     * @param source         源对象
-     * @param target         目标对象
-     * @param skipFieldNames 过滤的字段
-     */
-    public static void copyFields(Object source, Object target, String[] skipFieldNames) {
-        Set<String> skips = new HashSet<>();
-        if (skipFieldNames != null) {
-            skips.addAll(Arrays.asList(skipFieldNames));
-        }
-        HashMap<String, Field> sourceFieldMap = getAllFields(source);
-        HashMap<String, Field> targetFieldMap = getAllFields(target);
-        Iterator entries = sourceFieldMap.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry entry = (Map.Entry) entries.next();
-            String key = (String) entry.getKey();
-            Field value = (Field) entry.getValue();
-            value.setAccessible(true);
-            try {
-                if (value.get(source) != null && !skips.contains(key) && targetFieldMap.containsKey(key)) {
-                    targetFieldMap.get(key).setAccessible(true);
-                    targetFieldMap.get(key).set(target, value.get(source));
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
 
-        }
-    }
-
-    /**
-     * 获取对象所有的字段 包括父类
-     *
-     * @param obj 对象
-     * @return 字段名与Field对象的映射map
-     */
-    private static HashMap<String, Field> getAllFields(Object obj) {
-        Class sourceClass = obj.getClass();
-        //获取对象所有字段 包括父类
-        ArrayList<Field> sourceFields = new ArrayList<>();
-        while (sourceClass != null) {
-            sourceFields.addAll(Arrays.asList(sourceClass.getDeclaredFields()));
-            sourceClass = sourceClass.getSuperclass();
-        }
-        //字段名去重
-        HashMap<String, Field> sourceFieldMap = new HashMap<>(16);
-        for (Field field : sourceFields) {
-            sourceFieldMap.put(field.getName(), field);
-        }
-        return sourceFieldMap;
-    }
 
 }
