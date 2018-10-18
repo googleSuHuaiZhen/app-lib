@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -16,8 +18,9 @@ import java.lang.reflect.Field;
 
 /**
  * view 工具类
- * @date 2018-8-16
+ *
  * @author xiemeng
+ * @date 2018-8-16
  */
 
 public class ViewUtils {
@@ -26,7 +29,7 @@ public class ViewUtils {
      * 将DP转换为PX
      *
      * @param context context
-     * @param dp dp
+     * @param dp      dp
      */
     public static int dp2px(Context context, float dp) {
         final float scale = context.getResources().getDisplayMetrics().density;
@@ -35,7 +38,6 @@ public class ViewUtils {
 
     /**
      * PX转为DP
-     *
      */
     public static int px2dp(Context context, float px) {
         final float scale = context.getResources().getDisplayMetrics().density;
@@ -155,7 +157,7 @@ public class ViewUtils {
     }
 
 
-    public static void reflex(final TabLayout tabLayout,final Context context) {
+    public static void reflex(final TabLayout tabLayout, final Context context) {
         tabLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -182,8 +184,8 @@ public class ViewUtils {
                         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
                         params.width = width;
                         int screenWidth = getScreenWidth(context);
-                        params.leftMargin = (screenWidth-width*2)/4+dp10;
-                        params.rightMargin = (screenWidth-width*2)/4+dp10;
+                        params.leftMargin = (screenWidth - width * 2) / 4 + dp10;
+                        params.rightMargin = (screenWidth - width * 2) / 4 + dp10;
                         tabView.setLayoutParams(params);
                         tabView.invalidate();
                     }
@@ -223,8 +225,8 @@ public class ViewUtils {
                         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
                         params.width = width;
                         int screenWidth = getScreenWidth(context);
-                        params.leftMargin = (screenWidth-width*fg)/4+dp10;
-                        params.rightMargin = (screenWidth-width*fg)/4+dp10;
+                        params.leftMargin = (screenWidth - width * fg) / 4 + dp10;
+                        params.rightMargin = (screenWidth - width * fg) / 4 + dp10;
                         tabView.setLayoutParams(params);
                         tabView.invalidate();
                     }
@@ -233,6 +235,61 @@ public class ViewUtils {
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+    }
+
+    public interface ClickListener {
+        /**
+         * 点击触发
+         */
+        void click();
+    }
+
+    public static void getViewLeftListener(final TextView textView,final ClickListener listener) {
+        textView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // et.getCompoundDrawables()得到一个长度为4的数组，分别表示左右上下四张图片
+                Drawable drawable = textView.getCompoundDrawables()[1];
+                //如果右边没有图片，不再处理
+                if (drawable == null) {
+                    return false;
+                }
+                //如果不是按下事件，不再处理
+                if (event.getAction() != MotionEvent.ACTION_UP) {
+                    return false;
+                }
+                if (event.getX() > textView.getWidth()
+                        - textView.getPaddingLeft()
+                        - drawable.getIntrinsicWidth()) {
+                    listener.click();
+                }
+                return false;
+            }
+        });
+    }
+
+    public static void getViewRightListener(final TextView textView,final ClickListener listener) {
+        textView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // et.getCompoundDrawables()得到一个长度为4的数组，分别表示左右上下四张图片
+                Drawable drawable = textView.getCompoundDrawables()[2];
+                //如果右边没有图片，不再处理
+                if (drawable == null) {
+                    return false;
+                }
+                //如果不是按下事件，不再处理
+                if (event.getAction() != MotionEvent.ACTION_UP) {
+                    return false;
+                }
+                if (event.getX() > textView.getWidth()
+                        - textView.getPaddingRight()
+                        - drawable.getIntrinsicWidth()) {
+                    listener.click();
+                }
+                return false;
             }
         });
     }
