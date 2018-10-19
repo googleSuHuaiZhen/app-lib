@@ -72,7 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    private void steepStatusBar() {
+    protected void steepStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             // 透明状态栏
@@ -89,8 +89,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             decorView.setSystemUiVisibility(option);
             getWindow().setNavigationBarColor(Color.TRANSPARENT);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-
         }
+
     }
 
     public void setAllowScreenRotate(boolean isAllowScreenRotate) {
