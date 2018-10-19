@@ -8,6 +8,8 @@ lib-alert
     
 lib-base
 - 基类BaseActivity,BaseFragment,BaseQuickAdapter引用第三方
+- 引用'com.githang:status-bar-compat:latest.integration'可以快速自定义状态栏颜色，无需考虑版本问题
+    StatusBarCompat.setStatusBarColor(this, color, lightStatusBar);
 - BaseQuickAdapter  
   使用指南：https://www.jianshu.com/p/b343fcff51b0  
   源码地址：https://github.com/CymChad/BaseRecyclerViewAdapterHelper
