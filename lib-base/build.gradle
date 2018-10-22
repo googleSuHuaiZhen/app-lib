@@ -25,7 +25,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$appcompatLibVerson"
     implementation "com.android.support:design:$designLibVersion"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation "com.android.support.constraint:constraint-layout:$constraintVersion"
     api "com.jakewharton:butterknife:$butterknife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.41'
