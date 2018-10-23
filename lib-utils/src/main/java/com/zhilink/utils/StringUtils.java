@@ -125,13 +125,13 @@ public class StringUtils {
     /**
      * double 相加
      */
-    public static double sum(double d1, double d2) {
+    public static BigDecimal sum(double d1, double d2) {
         try {
-            BigDecimal bd1 = new BigDecimal(Double.toString(d1));
-            BigDecimal bd2 = new BigDecimal(Double.toString(d2));
-            return bd1.add(bd2).doubleValue();
+            BigDecimal bd1 = new BigDecimal(d1);
+            BigDecimal bd2 = new BigDecimal(d2);
+            return bd1.add(bd2);
         } catch (Exception e) {
-            return d1;
+            return new BigDecimal(d1);
         }
     }
 
@@ -154,7 +154,7 @@ public class StringUtils {
             e.printStackTrace();
             bd2 = new BigDecimal("0");
         }
-        return String.valueOf(bd1.add(bd2).doubleValue());
+        return String.valueOf(bd1.add(bd2));
     }
 
     /**
@@ -162,8 +162,8 @@ public class StringUtils {
      */
     public static double sub(double d1, double d2) {
         try {
-            BigDecimal bd1 = new BigDecimal(Double.toString(d1));
-            BigDecimal bd2 = new BigDecimal(Double.toString(d2));
+            BigDecimal bd1 = new BigDecimal(d1);
+            BigDecimal bd2 = new BigDecimal(d2);
             return bd1.subtract(bd2).doubleValue();
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,20 +190,20 @@ public class StringUtils {
             e.printStackTrace();
             bd2 = new BigDecimal("0");
         }
-        return String.valueOf(bd1.subtract(bd2).doubleValue());
+        return String.valueOf(bd1.subtract(bd2));
     }
 
     /**
      * double 乘法
      */
-    public static double mul(double d1, double d2) {
+    public static BigDecimal mul(double d1, double d2) {
         try {
-            BigDecimal bd1 = new BigDecimal(Double.toString(d1));
-            BigDecimal bd2 = new BigDecimal(Double.toString(d2));
-            return bd1.multiply(bd2).doubleValue();
+            BigDecimal bd1 = new BigDecimal(d1);
+            BigDecimal bd2 = new BigDecimal(d2);
+            return bd1.multiply(bd2);
         } catch (Exception e) {
             e.printStackTrace();
-            return d1;
+            return new BigDecimal(d1);
         }
     }
 
@@ -214,7 +214,7 @@ public class StringUtils {
         try {
             BigDecimal bd1 = new BigDecimal(d1);
             BigDecimal bd2 = new BigDecimal(d2);
-            return String.valueOf(bd1.multiply(bd2).doubleValue());
+            return String.valueOf(bd1.multiply(bd2));
         } catch (Exception e) {
             return d1;
         }
@@ -233,6 +233,7 @@ public class StringUtils {
             return d1;
         }
     }
+
     /**
      * double 除法
      */
@@ -240,11 +241,12 @@ public class StringUtils {
         try {
             BigDecimal bd1 = new BigDecimal(d1);
             BigDecimal bd2 = new BigDecimal(d2);
-            return String.valueOf(bd1.multiply(bd2).doubleValue());
+            return String.valueOf(bd1.multiply(bd2));
         } catch (Exception e) {
             return d1;
         }
     }
+
     /**
      * double 除法
      */
@@ -261,13 +263,13 @@ public class StringUtils {
     /**
      * double 除法
      */
-    public static double div(double d1, double d2) {
+    public static BigDecimal div(double d1, double d2) {
         try {
-            BigDecimal bd1 = new BigDecimal(Double.toString(d1));
-            BigDecimal bd2 = new BigDecimal(Double.toString(d2));
-            return bd1.divide(bd2).doubleValue();
+            BigDecimal bd1 = new BigDecimal(d1);
+            BigDecimal bd2 = new BigDecimal(d2);
+            return bd1.divide(bd2);
         } catch (Exception e) {
-            return d1;
+            return new BigDecimal(d1);
         }
     }
 
