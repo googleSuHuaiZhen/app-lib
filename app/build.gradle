@@ -28,22 +28,10 @@ android {
         debug {
             v1SigningEnabled true
             v2SigningEnabled true
-            Properties localProps = new Properties()
-            localProps.load(new FileInputStream(file('../local.properties')))
-            storeFile file(localProps["STORE_FILE"])
-            storePassword localProps["STORE_PASSWORD"]
-            keyAlias localProps["KEY_ALIAS"]
-            keyPassword localProps["KEY_PASSWORD"]
         }
         release {
             v1SigningEnabled true
             v2SigningEnabled true
-            Properties localProps = new Properties()
-            localProps.load(new FileInputStream(file('../local.properties')))
-            storeFile file(localProps["STORE_FILE"])
-            storePassword localProps["STORE_PASSWORD"]
-            keyAlias localProps["KEY_ALIAS"]
-            keyPassword localProps["KEY_PASSWORD"]
         }
     }
     buildTypes {
