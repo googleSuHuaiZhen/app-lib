@@ -3,8 +3,6 @@ package com.zhilink.retrofit;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-import io.reactivex.disposables.Disposable;
-
 
 /**
  * 重复请求管理
@@ -37,6 +35,10 @@ public class ReqManager {
 
     public void add(Object tag, boolean isRequestIng) {
         maps.put(tag, isRequestIng);
+    }
+
+    public boolean find(Object tag) {
+        return maps.get(tag) == null ? false : maps.get(tag);
     }
 
     public void remove(Object tag) {
