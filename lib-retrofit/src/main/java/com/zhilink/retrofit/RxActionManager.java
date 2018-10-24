@@ -78,4 +78,14 @@ public class RxActionManager {
             cancel(apiKey);
         }
     }
+
+    public Disposable getDisposable(Object tag) {
+        if (maps.isEmpty()) {
+            return null;
+        }
+        if (maps.get(tag) == null) {
+            return null;
+        }
+        return maps.get(tag);
+    }
 }
