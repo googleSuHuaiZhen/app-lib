@@ -47,9 +47,6 @@ public class ViewUtils {
     /**
      * sp转px
      *
-     * @param context
-     * @param spVal
-     * @return
      */
     public static int sp2px(Context context, float spVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
@@ -59,9 +56,6 @@ public class ViewUtils {
     /**
      * px转sp
      *
-     * @param context
-     * @param pxVal
-     * @return
      */
     public static float px2sp(Context context, float pxVal) {
         return (pxVal / context.getResources().getDisplayMetrics().scaledDensity);
@@ -71,30 +65,20 @@ public class ViewUtils {
      * 获取屏幕宽度
      */
     public static int getScreenWidth(Context context) {
-        WindowManager manager = ((Activity) context).getWindowManager();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.widthPixels;
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.widthPixels;
     }
 
     /**
      * 获取屏幕高度
-     *
-     * @param act
-     * @return
      */
-    public static int getScreenHeight(Context act) {
-        WindowManager manager = ((Activity) act).getWindowManager();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.heightPixels;
+    public static int getScreenHeight(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.heightPixels;
     }
 
     /**
      * 获得状态栏的高度
-     *
-     * @param context
-     * @return
      */
     public static int getStatusHeight(Context context) {
 
