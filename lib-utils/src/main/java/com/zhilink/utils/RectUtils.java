@@ -31,7 +31,7 @@ public class RectUtils {
 
     private int oldLocation;
 
-    public void controlKeyboardLayout(final NestedScrollView root, final Activity context) {
+    public void controlKeyboardLayout(final View root, final Activity context) {
         root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -60,8 +60,7 @@ public class RectUtils {
                         @Override
                         public void run() {
                             scrollToPosition(root,0,oldLocation);
-                            root.fling(0);
-                            root.smoothScrollTo(0, oldLocation);
+                            root.scrollTo(0, oldLocation);
                         }
                     });
                 }
