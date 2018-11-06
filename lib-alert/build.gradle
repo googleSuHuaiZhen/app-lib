@@ -29,7 +29,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$appcompatLibVerson"
 }
 ext.GROUP="com.zhilink.app"
-ext.VERSION_NAME="1.0.3-SNAPSHOT"
+ext.VERSION_NAME="$snapshotVersion"
 ext.POM_ARTIFACT_ID="alert"
 
 apply from: "${project.rootDir}/gradle_maven_push.gradle"
