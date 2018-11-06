@@ -181,6 +181,13 @@ public class BlueToothManager {
         return mDeviceName;
     }
 
+    public PrintSend getPrintSend() {
+        return mPrintSend;
+    }
+
+    public void setPrintSend(PrintSend mPrintSend) {
+        this.mPrintSend = mPrintSend;
+    }
 
     /**
      * 关闭蓝牙
