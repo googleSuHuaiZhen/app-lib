@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/lib-retrofit" />
             <option value="$PROJECT_DIR$/lib-router" />
             <option value="$PROJECT_DIR$/lib-utils" />
+            <option value="$PROJECT_DIR$/lib_blue_tooth" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

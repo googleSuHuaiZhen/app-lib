@@ -41,11 +41,17 @@ public class RetrofitUtils {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //创建一个OkHttpClient并设置超时时间
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
                 .addInterceptor(logInterceptor)
-                .addInterceptor(tokenInterceptor)
+                .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
+                .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
+                .addInterceptor(logInterceptor);
+        if (null != tokenInterceptor) {
+            builder.addInterceptor(tokenInterceptor);
+        }
+        OkHttpClient client = builder
                 .build();
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -65,13 +71,17 @@ public class RetrofitUtils {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //创建一个OkHttpClient并设置超时时间
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
                 .addInterceptor(logInterceptor)
-                .addInterceptor(tokenInterceptor)
-                .build();
-
+                .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
+                .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
+                .addInterceptor(logInterceptor);
+        if (null != tokenInterceptor) {
+            builder.addInterceptor(tokenInterceptor);
+        }
+        OkHttpClient client = builder.build();
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)
@@ -101,17 +111,18 @@ public class RetrofitUtils {
         };
 
         //创建一个OkHttpClient并设置超时时间
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
                 .addInterceptor(getRewriteCacheControlInterceptor(context))
                 .addNetworkInterceptor(getRewriteCacheControlInterceptor(context))
                 .addInterceptor(headerInterceptor)
-                .addInterceptor(logInterceptor)
-                .addInterceptor(tokenInterceptor)
-                .cache(cache)
+                .addInterceptor(logInterceptor);
+        if (null != tokenInterceptor) {
+            builder.addInterceptor(tokenInterceptor);
+        }
+        OkHttpClient client = builder.cache(cache)
                 .build();
-
         return new Retrofit.Builder()
                 .client(client)
                 .baseUrl(baseUrl)

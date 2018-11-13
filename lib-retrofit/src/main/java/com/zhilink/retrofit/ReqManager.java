@@ -3,39 +3,42 @@ package com.zhilink.retrofit;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-import io.reactivex.disposables.Disposable;
-
 
 /**
- * 管理rxJava发的请求
+ * 重复请求管理
+ * 判断是否在请求中
  *
  * @author xiemeng
  * @date 2018-8-27 14:05
  */
-public class RxActionManager {
-    private static final String TAG = "RxActionManager";
+public class ReqManager {
+    private static final String TAG = "ReqManager";
 
-    private static RxActionManager sInstance = null;
+    private static ReqManager sInstance = null;
 
-    private LinkedHashMap<Object, Disposable> maps;
+    private LinkedHashMap<Object, Boolean> maps;
 
-    public static RxActionManager get() {
+    public static ReqManager get() {
         if (sInstance == null) {
-            synchronized (RxActionManager.class) {
+            synchronized (ReqManager.class) {
                 if (sInstance == null) {
-                    sInstance = new RxActionManager();
+                    sInstance = new ReqManager();
                 }
             }
         }
         return sInstance;
     }
 
-    private RxActionManager() {
+    private ReqManager() {
         maps = new LinkedHashMap<>();
     }
 
-    public void add(Object tag, Disposable disposable) {
-        maps.put(tag, disposable);
+    public void add(Object tag, boolean isRequestIng) {
+        maps.put(tag, isRequestIng);
+    }
+
+    public boolean find(Object tag) {
+        return maps.get(tag) == null ? false : maps.get(tag);
     }
 
     public void remove(Object tag) {
@@ -59,13 +62,7 @@ public class RxActionManager {
         if (maps.isEmpty()) {
             return;
         }
-        if (maps.get(tag) == null) {
-            return;
-        }
-        if (!maps.get(tag).isDisposed()) {
-            maps.get(tag).dispose();
-            maps.remove(tag);
-        }
+        maps.remove(tag);
     }
 
 
@@ -77,15 +74,5 @@ public class RxActionManager {
         for (Object apiKey : keys) {
             cancel(apiKey);
         }
-    }
-
-    public Disposable getDisposable(Object tag) {
-        if (maps.isEmpty()) {
-            return null;
-        }
-        if (maps.get(tag) == null) {
-            return null;
-        }
-        return maps.get(tag);
     }
 }
