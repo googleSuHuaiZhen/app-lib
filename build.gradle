@@ -29,7 +29,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 ext {
-    snapshotVersion = '1.0.3'
+    snapshotVersion = '1.0.3-SNAPSHOT'
     //暂未使用
     release = '1.0.0'
 
