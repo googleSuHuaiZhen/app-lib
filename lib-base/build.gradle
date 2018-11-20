@@ -32,7 +32,7 @@ dependencies {
     api 'com.githang:status-bar-compat:latest.integration'
 }
 ext.GROUP="com.zhilink.app"
-ext.VERSION_NAME="$snapshotVersion"
+ext.VERSION_NAME="1.0.3"
 ext.POM_ARTIFACT_ID="base"
 
 apply from: "${project.rootDir}/gradle_maven_push.gradle"

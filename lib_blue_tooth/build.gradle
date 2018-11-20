@@ -26,8 +26,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
 }
+
 ext.GROUP="com.zhilink.app"
-ext.VERSION_NAME="$snapshotVersion"
+ext.VERSION_NAME="1.0.3"
 ext.POM_ARTIFACT_ID="blueTooth"
 
 apply from: "${project.rootDir}/gradle_maven_push.gradle"
