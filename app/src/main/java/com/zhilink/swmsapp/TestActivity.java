@@ -99,7 +99,6 @@ public class TestActivity extends BaseTitleActivity {
                     .build();
 
             Response response = okHttpClient.newCall(request).execute();
-
             InputStream is = response.body().byteStream();
             //为了方便就不动态申请权限了,直接将文件放到CacheDir()中
             File file = new File(getCacheDir(), "download");
