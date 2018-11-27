@@ -189,4 +189,12 @@ public class ActivityManagerUtils {
     }
 
 
+    public void recreateAllOtherActivity(Activity activity) {
+        for (int i = 0, size = activityLists.size(); i < size; i++) {
+            if (null != activityLists.get(i) && activityLists.get(i) != activity) {
+                activityLists.get(i).recreate();
+            }
+        }
+    }
+
 }
