@@ -1,1 +1,1 @@
-include ':app', ':lib-utils', ':lib-alert', ':lib-base', ':lib-resource', ':app-z-middle', ':lib-retrofit', ':lib-crash-exception', ':lib-router', ':lib_blue_tooth'
+include ':app', ':lib-utils', ':lib-alert', ':lib-base', ':lib-resource', ':app-z-middle', ':lib-retrofit', ':lib-crash-exception', ':lib-router'
