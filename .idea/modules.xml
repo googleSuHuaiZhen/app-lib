@@ -13,7 +13,6 @@
       <module fileurl="file://$PROJECT_DIR$/lib-router/lib-router.iml" filepath="$PROJECT_DIR$/lib-router/lib-router.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-utils/lib-utils.iml" filepath="$PROJECT_DIR$/lib-utils/lib-utils.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib_blue_tooth/lib_blue_tooth.iml" filepath="$PROJECT_DIR$/lib_blue_tooth/lib_blue_tooth.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib_blue_tooth/lib_blue_tooth.iml" filepath="$PROJECT_DIR$/lib_blue_tooth/lib_blue_tooth.iml" />
     </modules>
   </component>
 </project>
