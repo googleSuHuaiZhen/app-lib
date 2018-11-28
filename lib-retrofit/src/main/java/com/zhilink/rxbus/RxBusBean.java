@@ -7,6 +7,11 @@ package com.zhilink.rxbus;
  */
 public class RxBusBean<T> {
 
+    public RxBusBean(int code, T data) {
+        this.code = code;
+        this.data = data;
+    }
+
     private int  code;
 
     private T data;
