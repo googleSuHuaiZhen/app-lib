@@ -77,7 +77,7 @@ public class BeanPropertiesUtils {
             Object value = null;
             try {
                 value = fromMethod.invoke(from, new Object[0]);
-                if (value == null) {
+                if (value == null||StringUtils.isBlank(value.toString())) {
                     continue;
                 }
                 //集合类判空处理
@@ -105,7 +105,7 @@ public class BeanPropertiesUtils {
     public static void copyPropertiesInclude(Class from, Class to, String[] includesArray) {
         List<String> includesList = null;
         if (includesArray != null && includesArray.length > 0) {
-            includesList = Arrays.asList(includesArray);    //构造列表对象
+            includesList = Arrays.asList(includesArray);
         } else {
             return;
         }
@@ -178,8 +178,6 @@ public class BeanPropertiesUtils {
         }
         return null;
     }
-
-
 
 
 

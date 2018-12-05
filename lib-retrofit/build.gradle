@@ -37,3 +37,11 @@ dependencies {
     api 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:2.2.1'
 }
 
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+ext.GROUP="com.zhilink.app"
+ext.VERSION_NAME="1.0.3"
+ext.POM_ARTIFACT_ID="retrofit"
+
+apply from: "${project.rootDir}/gradle_maven_push.gradle"
