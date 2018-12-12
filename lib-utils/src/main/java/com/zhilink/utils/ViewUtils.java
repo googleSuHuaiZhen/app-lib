@@ -2,15 +2,16 @@ package com.zhilink.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -46,7 +47,6 @@ public class ViewUtils {
 
     /**
      * sp转px
-     *
      */
     public static int sp2px(Context context, float spVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
@@ -55,7 +55,6 @@ public class ViewUtils {
 
     /**
      * px转sp
-     *
      */
     public static float px2sp(Context context, float pxVal) {
         return (pxVal / context.getResources().getDisplayMetrics().scaledDensity);
@@ -230,7 +229,7 @@ public class ViewUtils {
         void click();
     }
 
-    public static void getViewLeftListener(final TextView textView,final ClickListener listener) {
+    public static void getViewLeftListener(final TextView textView, final ClickListener listener) {
         textView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -254,7 +253,7 @@ public class ViewUtils {
         });
     }
 
-    public static void getViewRightListener(final TextView textView,final ClickListener listener) {
+    public static void getViewRightListener(final TextView textView, final ClickListener listener) {
         textView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -277,4 +276,14 @@ public class ViewUtils {
             }
         });
     }
+
+    /**
+     * 着色器，动态修改图片颜色
+     */
+    public static Drawable tintDrawable(Drawable drawable, ColorStateList colors) {
+        final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTintList(wrappedDrawable, colors);
+        return wrappedDrawable;
+    }
+
 }
