@@ -37,6 +37,3 @@ dependencies {
     api 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:2.2.1'
 }
 
-configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}
