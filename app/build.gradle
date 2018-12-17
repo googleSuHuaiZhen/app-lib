@@ -17,7 +17,7 @@ def name() {
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "zhilink.com.swmsapp2"
+        applicationId "zhilink.com.swmsapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
