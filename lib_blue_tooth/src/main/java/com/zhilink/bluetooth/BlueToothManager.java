@@ -112,7 +112,7 @@ public class BlueToothManager {
      * @param blueToothShowBean 蓝牙地址,蓝牙名称 必填
      */
     public void connect(final BlueToothShowBean blueToothShowBean, final ConnectListener listener) {
-        if (null == mBTAdapter) {
+        if (null == mBTAdapter || !getConnected()) {
             listener.onFailed();
             return;
         }
