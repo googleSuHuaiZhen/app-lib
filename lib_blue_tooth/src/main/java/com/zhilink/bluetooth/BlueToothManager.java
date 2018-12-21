@@ -106,8 +106,7 @@ public class BlueToothManager {
         void onFailed();
     }
 
-    /**
-     * 连接设备
+    /**     * 连接设备
      *
      * @param blueToothShowBean 蓝牙地址,蓝牙名称 必填
      */
