@@ -175,6 +175,13 @@ public class RetrofitUtils {
         this.readTimeOut = readTimeOut;
     }
 
+    public int getConnectTimeOut() {
+        return connectTimeOut;
+    }
+
+    public void setConnectTimeOut(int connectTimeOut) {
+        this.connectTimeOut = connectTimeOut;
+    }
 
     public void setCacheStaleSec(int cacheStaleSec) {
         this.cacheStaleSec = cacheStaleSec;
