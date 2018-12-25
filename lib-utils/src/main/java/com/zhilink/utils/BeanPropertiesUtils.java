@@ -90,10 +90,6 @@ public class BeanPropertiesUtils {
                 if (value == null || StringUtils.isBlank(value.toString())) {
                     continue;
                 }
-                Object toInvoke = toMethod.invoke(to, new Object[]{0});
-                if (!isCoverFrom && toInvoke != null && !StringUtils.isBlank(value.toString())) {
-                    continue;
-                }
                 //集合类判空处理
                 if (value instanceof Collection) {
                     Collection newValue = (Collection) value;
