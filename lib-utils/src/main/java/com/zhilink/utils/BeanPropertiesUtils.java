@@ -1,12 +1,18 @@
 package com.zhilink.utils;
 
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 对象copy
@@ -17,30 +23,17 @@ import java.util.List;
  */
 public class BeanPropertiesUtils {
     /**
-     * 利用反射实现对象之间属性复制
-     * 默认如果from属性为空，不覆盖to属性，如有值则覆盖
+     * 利用反射实现对象之间属性复制--父类属性无法copy
      */
     public static void copyProperties(Object from, Object to) {
-        copyPropertiesExclude(from, to, null, true);
+        copyPropertiesExclude(from, to, null);
     }
 
     /**
-     * 利用反射实现对象之间属性复制
-     *
-     * @param isCoverFrom 当to对象字段已有值时，from是否覆盖已有属性
-     */
-    public static void copyProperties(Object from, Object to, boolean isCoverFrom) {
-        copyPropertiesExclude(from, to, null, isCoverFrom);
-    }
-
-    /**
-     * 复制对象属性
-     *
-     * @param excludesArray 不copy的属性
-     * @param isCoverFrom   当to对象字段已有值时，from是否覆盖已有属性
+     * 复制对象属性--父类属性无法copy
      */
     @SuppressWarnings("unchecked")
-    public static void copyPropertiesExclude(Object from, Object to, String[] excludesArray, boolean isCoverFrom) {
+    public static void copyPropertiesExclude(Object from, Object to, String[] excludesArray) {
         List<String> excludesList = null;
         if (excludesArray != null && excludesArray.length > 0) {
             //构造列表对象
@@ -58,9 +51,9 @@ public class BeanPropertiesUtils {
         for (toMethodList = new ArrayList(); toClass != null; toClass = toClass.getSuperclass()) {
             toMethodList.addAll(Arrays.asList(toClass.getDeclaredMethods()));
         }
-        Method[] fromMethods = new Method[fromMethodList.size()];
+        Method[] fromMethods= new Method[fromMethodList.size()];
         fromMethodList.toArray(fromMethods);
-        Method[] toMethods = new Method[toMethodList.size()];
+        Method[] toMethods= new Method[toMethodList.size()];
         toMethodList.toArray(toMethods);
 
 
@@ -69,10 +62,8 @@ public class BeanPropertiesUtils {
         for (int i = 0; i < fromMethods.length; i++) {
             fromMethod = fromMethods[i];
             fromMethodName = fromMethod.getName();
-            if (!isCoverFrom) {
-                if (!fromMethodName.contains("get") || fromMethodName.contains("getId")) {
-                    continue;
-                }
+            if (!fromMethodName.contains("get") || fromMethodName.contains("getId")) {
+                continue;
             }
             //排除列表检测
             if (excludesList != null && excludesList.contains(fromMethodName.substring(3).toLowerCase())) {
@@ -83,11 +74,10 @@ public class BeanPropertiesUtils {
             if (toMethod == null) {
                 continue;
             }
-
-            Object value;
+            Object value = null;
             try {
                 value = fromMethod.invoke(from, new Object[0]);
-                if (value == null || StringUtils.isBlank(value.toString())) {
+                if (value == null||StringUtils.isBlank(value.toString())) {
                     continue;
                 }
                 //集合类判空处理
@@ -109,7 +99,7 @@ public class BeanPropertiesUtils {
 
 
     /**
-     * 对象属性值复制，仅复制指定名称的属性值
+     * 对象属性值复制，仅复制指定名称的属性值 --父类属性无法copy
      */
     @SuppressWarnings("unchecked")
     public static void copyPropertiesInclude(Class from, Class to, String[] includesArray) {
@@ -131,9 +121,9 @@ public class BeanPropertiesUtils {
         for (toMethodList = new ArrayList(); toClass != null; toClass = toClass.getSuperclass()) {
             toMethodList.addAll(Arrays.asList(toClass.getDeclaredMethods()));
         }
-        Method[] fromMethods = new Method[fromMethodList.size()];
+        Method[] fromMethods= new Method[fromMethodList.size()];
         fromMethodList.toArray(fromMethods);
-        Method[] toMethods = new Method[toMethodList.size()];
+        Method[] toMethods= new Method[toMethodList.size()];
         toMethodList.toArray(toMethods);
 
         Method fromMethod = null, toMethod = null;
@@ -188,6 +178,8 @@ public class BeanPropertiesUtils {
         }
         return null;
     }
+
+
 
 
 }
