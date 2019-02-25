@@ -41,6 +41,14 @@ public class ActivityManagerUtils {
                 activity.finish();
             }
         }
+    }
+
+    public static void finishAllActivityExitApp() {
+        for (Activity activity : activityLists) {
+            if (activity != null && !activity.isFinishing()) {
+                activity.finish();
+            }
+        }
         System.exit(0);
     }
 
