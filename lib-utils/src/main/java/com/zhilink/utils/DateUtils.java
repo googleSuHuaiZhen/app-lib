@@ -48,7 +48,14 @@ public class DateUtils {
         Calendar calendar = Calendar.getInstance();
         return df.format(calendar.getTime());
     }
-
+    /**
+     * 获取当前时间
+     */
+    public static String getDateString() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+        Calendar calendar = Calendar.getInstance();
+        return df.format(calendar.getTime());
+    }
     /**
      * 获取当前时间
      */
