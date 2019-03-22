@@ -23,7 +23,13 @@ public class BeanPropertiesUtils {
     public static void copyProperties(Object from, Object to) {
         copyPropertiesExcludeCover(from, to, null, false);
     }
-
+    /**
+     * 利用反射实现对象之间属性复制
+     * 默认不覆盖已有值属性
+     */
+    public static void copyPropertiesExclude(Object from, Object to,String[] excludesArray) {
+        copyPropertiesExcludeCover(from, to, excludesArray, false);
+    }
     /**
      * 利用反射实现对象之间属性复制
      */
