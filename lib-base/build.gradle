@@ -29,7 +29,7 @@ dependencies {
     api "com.jakewharton:butterknife:$butterknife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.41'
-    api 'com.githang:status-bar-compat:latest.integration'
+    api 'com.githang:status-bar-compat:0.7'
 }
 ext.GROUP="com.zhilink.app"
 ext.VERSION_NAME="$snapshotVersion"

@@ -1,18 +1,12 @@
 package com.zhilink.utils;
 
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * 对象copy
@@ -23,17 +17,25 @@ import java.util.Set;
  */
 public class BeanPropertiesUtils {
     /**
-     * 利用反射实现对象之间属性复制--父类属性无法copy
+     * 利用反射实现对象之间属性复制
+     * 默认不覆盖已有值属性
      */
     public static void copyProperties(Object from, Object to) {
-        copyPropertiesExclude(from, to, null);
+        copyPropertiesExcludeCover(from, to, null, false);
     }
 
     /**
-     * 复制对象属性--父类属性无法copy
+     * 利用反射实现对象之间属性复制
+     */
+    public static void copyPropertiesCover(Object from, Object to, boolean isCover) {
+        copyPropertiesExcludeCover(from, to, null, isCover);
+    }
+
+    /**
+     * 复制对象属性
      */
     @SuppressWarnings("unchecked")
-    public static void copyPropertiesExclude(Object from, Object to, String[] excludesArray) {
+    public static void copyPropertiesExcludeCover(Object from, Object to, String[] excludesArray, boolean isCover) {
         List<String> excludesList = null;
         if (excludesArray != null && excludesArray.length > 0) {
             //构造列表对象
@@ -51,14 +53,14 @@ public class BeanPropertiesUtils {
         for (toMethodList = new ArrayList(); toClass != null; toClass = toClass.getSuperclass()) {
             toMethodList.addAll(Arrays.asList(toClass.getDeclaredMethods()));
         }
-        Method[] fromMethods= new Method[fromMethodList.size()];
+        Method[] fromMethods = new Method[fromMethodList.size()];
         fromMethodList.toArray(fromMethods);
-        Method[] toMethods= new Method[toMethodList.size()];
+        Method[] toMethods = new Method[toMethodList.size()];
         toMethodList.toArray(toMethods);
 
 
-        Method fromMethod = null, toMethod = null;
-        String fromMethodName = null, toMethodName = null;
+        Method fromMethod = null, toMethod = null, toGetMethod = null;
+        String fromMethodName = null, toMethodName = null, toGetMethodName = null;
         for (int i = 0; i < fromMethods.length; i++) {
             fromMethod = fromMethods[i];
             fromMethodName = fromMethod.getName();
@@ -71,13 +73,17 @@ public class BeanPropertiesUtils {
             }
             toMethodName = "set" + fromMethodName.substring(3);
             toMethod = findMethodByName(toMethods, toMethodName);
+
+            toGetMethodName = "get" + fromMethodName.substring(3);
+            toGetMethod = findMethodByName(toMethods, toGetMethodName);
+
             if (toMethod == null) {
                 continue;
             }
             Object value = null;
             try {
                 value = fromMethod.invoke(from, new Object[0]);
-                if (value == null||StringUtils.isBlank(value.toString())) {
+                if (value == null || StringUtils.isBlank(value.toString())) {
                     continue;
                 }
                 //集合类判空处理
@@ -86,6 +92,10 @@ public class BeanPropertiesUtils {
                     if (newValue.size() <= 0) {
                         continue;
                     }
+                }
+                Object oldValue = toGetMethod.invoke(to, new Object[0]);
+                if (!isCover && null != oldValue) {
+                    continue;
                 }
                 toMethod.invoke(to, new Object[]{value});
             } catch (IllegalAccessException e) {
@@ -96,7 +106,6 @@ public class BeanPropertiesUtils {
 
         }
     }
-
 
     /**
      * 对象属性值复制，仅复制指定名称的属性值 --父类属性无法copy
@@ -121,9 +130,9 @@ public class BeanPropertiesUtils {
         for (toMethodList = new ArrayList(); toClass != null; toClass = toClass.getSuperclass()) {
             toMethodList.addAll(Arrays.asList(toClass.getDeclaredMethods()));
         }
-        Method[] fromMethods= new Method[fromMethodList.size()];
+        Method[] fromMethods = new Method[fromMethodList.size()];
         fromMethodList.toArray(fromMethods);
-        Method[] toMethods= new Method[toMethodList.size()];
+        Method[] toMethods = new Method[toMethodList.size()];
         toMethodList.toArray(toMethods);
 
         Method fromMethod = null, toMethod = null;
@@ -178,8 +187,6 @@ public class BeanPropertiesUtils {
         }
         return null;
     }
-
-
 
 
 }
