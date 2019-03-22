@@ -59,8 +59,8 @@ public class BeanPropertiesUtils {
         toMethodList.toArray(toMethods);
 
 
-        Method fromMethod = null, toMethod = null, toGetMethod = null;
-        String fromMethodName = null, toMethodName = null, toGetMethodName = null;
+        Method fromMethod = null, toSetMethod = null, toGetMethod = null;
+        String fromMethodName = null, toSetMethodName = null, toGetMethodName = null;
         for (int i = 0; i < fromMethods.length; i++) {
             fromMethod = fromMethods[i];
             fromMethodName = fromMethod.getName();
@@ -71,13 +71,13 @@ public class BeanPropertiesUtils {
             if (excludesList != null && excludesList.contains(fromMethodName.substring(3).toLowerCase())) {
                 continue;
             }
-            toMethodName = "set" + fromMethodName.substring(3);
-            toMethod = findMethodByName(toMethods, toMethodName);
+            toSetMethodName = "set" + fromMethodName.substring(3);
+            toSetMethod = findMethodByName(toMethods, toSetMethodName);
 
             toGetMethodName = "get" + fromMethodName.substring(3);
             toGetMethod = findMethodByName(toMethods, toGetMethodName);
 
-            if (toMethod == null) {
+            if (toSetMethod == null) {
                 continue;
             }
             Object value = null;
@@ -97,7 +97,7 @@ public class BeanPropertiesUtils {
                 if (!isCover && null != oldValue) {
                     continue;
                 }
-                toMethod.invoke(to, new Object[]{value});
+                toSetMethod.invoke(to, new Object[]{value});
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
