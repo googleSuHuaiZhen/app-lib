@@ -102,7 +102,10 @@ public class BeanPropertiesUtils {
                     }
                 }
                 Object oldValue = toGetMethod.invoke(to, new Object[0]);
-                if (!isCover && null != oldValue && !"0".equals(oldValue.toString())) {
+                //如果
+                if (!isCover && null != oldValue && !"0".equals(oldValue.toString())
+                        && !StringUtils.isBlank(oldValue.toString())
+                        && !"false".equals(oldValue.toString())) {
                     continue;
                 }
                 toSetMethod.invoke(to, new Object[]{value});
