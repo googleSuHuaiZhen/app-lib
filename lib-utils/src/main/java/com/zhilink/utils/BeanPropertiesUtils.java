@@ -23,13 +23,15 @@ public class BeanPropertiesUtils {
     public static void copyProperties(Object from, Object to) {
         copyPropertiesExcludeCover(from, to, null, false);
     }
+
     /**
      * 利用反射实现对象之间属性复制
      * 默认不覆盖已有值属性
      */
-    public static void copyPropertiesExclude(Object from, Object to,String[] excludesArray) {
+    public static void copyPropertiesExclude(Object from, Object to, String[] excludesArray) {
         copyPropertiesExcludeCover(from, to, excludesArray, false);
     }
+
     /**
      * 利用反射实现对象之间属性复制
      */
@@ -100,7 +102,7 @@ public class BeanPropertiesUtils {
                     }
                 }
                 Object oldValue = toGetMethod.invoke(to, new Object[0]);
-                if (!isCover && null != oldValue) {
+                if (!isCover && null != oldValue && !"0".equals(oldValue.toString())) {
                     continue;
                 }
                 toSetMethod.invoke(to, new Object[]{value});
