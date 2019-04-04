@@ -44,6 +44,9 @@ public class BeanPropertiesUtils {
      */
     @SuppressWarnings("unchecked")
     public static void copyPropertiesExcludeCover(Object from, Object to, String[] excludesArray, boolean isCover) {
+        if (null == from || to == null) {
+            return;
+        }
         List<String> excludesList = null;
         if (excludesArray != null && excludesArray.length > 0) {
             //构造列表对象
