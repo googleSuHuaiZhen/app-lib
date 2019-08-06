@@ -285,5 +285,12 @@ public class ViewUtils {
         DrawableCompat.setTintList(wrappedDrawable, colors);
         return wrappedDrawable;
     }
-
+    /**
+     * 着色器，动态修改图片颜色
+     */
+    public static Drawable tintDrawable(Drawable drawable, int colors) {
+        final Drawable wrappedDrawable = DrawableCompat.wrap(drawable).mutate();
+        DrawableCompat.setTint(wrappedDrawable, colors);
+        return wrappedDrawable;
+    }
 }

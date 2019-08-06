@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 
+import com.google.gson.GsonBuilder;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +20,7 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.fastjson.FastJsonConverterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
@@ -36,6 +39,7 @@ public class RetrofitUtils {
 
     /**
      * 无缓存策略的Retrofit
+     * fastJson
      */
     public Retrofit getRetrofit(String baseUrl, Interceptor tokenInterceptor) {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
@@ -44,7 +48,6 @@ public class RetrofitUtils {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
-                .addInterceptor(logInterceptor)
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
                 .addInterceptor(logInterceptor);
@@ -57,11 +60,37 @@ public class RetrofitUtils {
                 .baseUrl(baseUrl)
                 .client(client)
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(FastJsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
+    /**
+     * 无缓存策略的Retrofit
+     */
+    public Retrofit getRetrofitGson(String baseUrl, Interceptor tokenInterceptor) {
+        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        //创建一个OkHttpClient并设置超时时间
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
+                .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
+                .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
+                .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
+                .addInterceptor(logInterceptor);
+        if (null != tokenInterceptor) {
+            builder.addInterceptor(tokenInterceptor);
+        }
+        OkHttpClient client = builder
+                .build();
+        return new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(client)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().disableHtmlEscaping().create()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+    }
 
     /**
      * 无缓存策略的Retrofit
@@ -175,6 +204,13 @@ public class RetrofitUtils {
         this.readTimeOut = readTimeOut;
     }
 
+    public int getConnectTimeOut() {
+        return connectTimeOut;
+    }
+
+    public void setConnectTimeOut(int connectTimeOut) {
+        this.connectTimeOut = connectTimeOut;
+    }
 
     public void setCacheStaleSec(int cacheStaleSec) {
         this.cacheStaleSec = cacheStaleSec;

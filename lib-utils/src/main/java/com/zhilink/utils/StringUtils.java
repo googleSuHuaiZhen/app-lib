@@ -241,7 +241,7 @@ public class StringUtils {
         try {
             BigDecimal bd1 = new BigDecimal(d1);
             BigDecimal bd2 = new BigDecimal(d2);
-            return String.valueOf(bd1.multiply(bd2));
+            return String.valueOf(bd1.divide(bd2));
         } catch (Exception e) {
             return d1;
         }
